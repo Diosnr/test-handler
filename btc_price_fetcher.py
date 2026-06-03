@@ -1,37 +1,51 @@
+#!/usr/bin/env python3
+"""
+BTC Price Fetcher
+Fetches current Bitcoin price from CoinGecko public API and displays it with timestamp.
+
+Usage:
+    python btc_price_fetcher.py
+
+Requirements:
+    pip install requests
+
+Author: Handler
+"""
+
 import requests
-import json
 from datetime import datetime
+
 
 def fetch_btc_price():
     """
-    Fetches current BTC/USD price from CoinGecko public API.
-    No API key required.
+    Fetches current BTC price in USD from CoinGecko public API.
+    
+    Returns:
+        tuple: (price, timestamp) if successful, (None, error_message) if failed
     """
+    url = "https://api.coingecko.com/api/v3/simple/price"
+    params = {
+        "ids": "bitcoin",
+        "vs_currencies": "usd"
+    }
+    
     try:
-        # CoinGecko free API endpoint
-        url = "https://api.coingecko.com/api/v3/simple/price"
-        params = {
-            "ids": "bitcoin",
-            "vs_currencies": "usd"
-        }
-        
         response = requests.get(url, params=params, timeout=10)
         response.raise_for_status()
-        
         data = response.json()
-        btc_price = data["bitcoin"]["usd"]
         
+        price = data["bitcoin"]["usd"]
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
-        print(f"[{timestamp}] BTC Price: ${btc_price:,.2f} USD")
-        return btc_price
-        
+        return price, timestamp
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching BTC price: {e}")
-        return None
-    except (KeyError, ValueError) as e:
-        print(f"Error parsing response: {e}")
-        return None
+        return None, str(e)
+
 
 if __name__ == "__main__":
-    fetch_btc_price()
+    price, timestamp = fetch_btc_price()
+    
+    if price:
+        print(f"[{timestamp}] BTC Price: ${price:,.2f} USD")
+    else:
+        print(f"Error fetching BTC price: {timestamp}")
