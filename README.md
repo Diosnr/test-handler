@@ -1,18 +1,11 @@
 # BTC Price Fetcher
 
-A simple Python script that fetches the current Bitcoin (BTC) price from the CoinGecko public API and displays it with a timestamp.
-
-## Features
-
-- Fetches live BTC price in USD
-- Displays formatted price with timestamp
-- Uses CoinGecko's free public API (no API key required)
-- Error handling for network issues
+Live Python script that fetches current Bitcoin price from CoinGecko public API and displays it with a timestamp.
 
 ## Installation
 
 ```bash
-pip install requests
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -21,19 +14,21 @@ pip install requests
 python btc_price_fetcher.py
 ```
 
-## Example Output
+## Output Example
 
 ```
-[2026-06-03 02:07:24] BTC Price: $66,812.00 USD
+[2026-06-03 02:14:13] BTC Price: $66,785.00 USD
 ```
 
-## API Reference
+## Features
 
-This script uses the CoinGecko Simple Price API endpoint:
-- **Endpoint**: `https://api.coingecko.com/api/v3/simple/price`
-- **Rate Limit**: 10-50 calls/minute (free tier)
-- **Documentation**: https://www.coingecko.com/en/api/documentation
+- Uses CoinGecko public API (no API key required)
+- Displays formatted price with timestamp
+- Error handling for network issues
+- 10-second timeout for reliability
 
-## License
+## API
 
-Open source - use freely.
+CoinGecko API endpoint: `https://api.coingecko.com/api/v3/simple/price`
+
+No authentication required for basic price queries.
